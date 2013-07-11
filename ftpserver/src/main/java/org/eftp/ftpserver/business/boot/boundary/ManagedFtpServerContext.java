@@ -7,6 +7,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.ejb.ConcurrencyManagement;
+import javax.ejb.ConcurrencyManagementType;
+import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.enterprise.concurrent.ManagedThreadFactory;
 import org.apache.ftpserver.ConnectionConfig;
@@ -25,7 +28,9 @@ import org.apache.ftpserver.message.MessageResource;
  *
  * @author adam-bien.com
  */
+@LocalBean
 @Singleton
+@ConcurrencyManagement(ConcurrencyManagementType.BEAN)
 public class ManagedFtpServerContext implements FtpServerContext {
 
     int corePoolSize = 2;
@@ -37,11 +42,11 @@ public class ManagedFtpServerContext implements FtpServerContext {
     @Resource
     ManagedThreadFactory threadFactory;
 
-    FtpServerContext delegate;
+    private DefaultFtpServerContext delegate;
     private ThreadPoolExecutor executor;
 
     @PostConstruct
-    public void initialize() {
+    public void init() {
         this.workQueue = new LinkedBlockingQueue<>();
         this.delegate = new DefaultFtpServerContext();
         this.executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTimeInHours, TimeUnit.HOURS, workQueue, threadFactory);
@@ -106,5 +111,4 @@ public class ManagedFtpServerContext implements FtpServerContext {
     public ThreadPoolExecutor getThreadPoolExecutor() {
         return this.executor;
     }
-
 }

@@ -1,5 +1,6 @@
 package org.eftp.ftpserver.business.boot.boundary;
 
+import org.eftp.ftpserver.business.boot.control.ManagedFtpServerContext;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;

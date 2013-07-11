@@ -12,6 +12,7 @@ import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.enterprise.concurrent.ManagedThreadFactory;
+import javax.enterprise.inject.Produces;
 import org.apache.ftpserver.ConnectionConfig;
 import org.apache.ftpserver.command.CommandFactory;
 import org.apache.ftpserver.ftplet.FileSystemFactory;
@@ -100,6 +101,7 @@ public class ManagedFtpServerContext implements FtpServerContext {
     }
 
     @Override
+    @Produces
     public FtpStatistics getFtpStatistics() {
         return delegate.getFtpStatistics();
     }

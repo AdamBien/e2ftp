@@ -50,7 +50,8 @@ public class ManagedFtpServerContext implements FtpServerContext {
     public void init() {
         this.workQueue = new LinkedBlockingQueue<>();
         this.delegate = new DefaultFtpServerContext();
-        this.executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTimeInHours, TimeUnit.HOURS, workQueue, threadFactory);
+        //Problems with passing ThreadFactory
+        this.executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTimeInHours, TimeUnit.HOURS, workQueue);
     }
 
     @Override

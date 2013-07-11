@@ -23,6 +23,7 @@ import org.apache.ftpserver.impl.DefaultFtpServerContext;
 import org.apache.ftpserver.impl.FtpServerContext;
 import org.apache.ftpserver.listener.Listener;
 import org.apache.ftpserver.message.MessageResource;
+import org.eftp.ftpserver.business.users.control.InMemoryUserManager;
 
 /**
  *
@@ -110,5 +111,17 @@ public class ManagedFtpServerContext implements FtpServerContext {
     @Override
     public ThreadPoolExecutor getThreadPoolExecutor() {
         return this.executor;
+    }
+
+    public void setConnectionConfig(ConnectionConfig createConnectionConfig) {
+        this.delegate.setConnectionConfig(createConnectionConfig);
+    }
+
+    public void setUserManager(InMemoryUserManager userManager) {
+        this.delegate.setUserManager(userManager);
+    }
+
+    public void addListener(String adefault, Listener createListener) {
+        this.delegate.addListener(adefault, createListener);
     }
 }

@@ -7,7 +7,6 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import org.apache.ftpserver.ConnectionConfigFactory;
 import org.apache.ftpserver.FtpServer;
-import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.ftpserver.impl.DefaultFtpServer;
 import org.apache.ftpserver.listener.ListenerFactory;
@@ -39,12 +38,11 @@ public class FTPServerWrapper {
         ccf.setAnonymousLoginEnabled(true);
         ccf.setMaxThreads(2);
         ccf.setMaxAnonymousLogins(MAX_LOGINS);
-        FtpServerFactory fsf = new FtpServerFactory();
-        fsf.setConnectionConfig(ccf.createConnectionConfig());
-        fsf.setUserManager(userManager);
+        this.managedContext.setConnectionConfig(ccf.createConnectionConfig());
+        this.managedContext.setUserManager(userManager);
         ListenerFactory factory = new ListenerFactory();
         factory.setPort(SERVER_PORT);
-        fsf.addListener("default", factory.createListener());
+        this.managedContext.addListener("default", factory.createListener());
         this.ftpServer = new DefaultFtpServer(this.managedContext);
         try {
             this.ftpServer.start();

@@ -38,11 +38,13 @@ public class ManagedFtpServerContext implements FtpServerContext {
     ManagedThreadFactory threadFactory;
 
     FtpServerContext delegate;
+    private ThreadPoolExecutor executor;
 
     @PostConstruct
     public void initialize() {
         this.workQueue = new LinkedBlockingQueue<>();
         this.delegate = new DefaultFtpServerContext();
+        this.executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTimeInHours, TimeUnit.HOURS, workQueue, threadFactory);
     }
 
     @Override
@@ -102,8 +104,7 @@ public class ManagedFtpServerContext implements FtpServerContext {
 
     @Override
     public ThreadPoolExecutor getThreadPoolExecutor() {
-        return new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTimeInHours, TimeUnit.HOURS, workQueue, threadFactory);
-
+        return this.executor;
     }
 
 }

@@ -19,6 +19,8 @@ import org.eftp.ftpserver.business.boot.boundary.FTPServerWrapper;
  */
 public class InMemoryUserManager implements UserManager {
 
+    private static final String JAVA_IO_TEMP_DIR = System.getProperty("java.io.tmpdir");
+
     @Override
     public User getUserByName(String string) throws FtpException {
         return getUser();
@@ -68,7 +70,7 @@ public class InMemoryUserManager implements UserManager {
         user.setAuthorities(authorities);
         user.setName("duke");
         user.setPassword("duke");
-        user.setHomeDirectory("/tmp");
+        user.setHomeDirectory(JAVA_IO_TEMP_DIR);
         user.setMaxIdleTime(FTPServerWrapper.IDLE_TIME);
         return user;
     }

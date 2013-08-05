@@ -1,6 +1,5 @@
 package org.eftp.ftpserver.business.boot.boundary;
 
-import org.eftp.ftpserver.business.boot.control.ManagedFtpServerContext;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
@@ -11,6 +10,7 @@ import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.ftpserver.impl.DefaultFtpServer;
 import org.apache.ftpserver.listener.ListenerFactory;
+import org.eftp.ftpserver.business.boot.control.ManagedFtpServerContext;
 import org.eftp.ftpserver.business.users.control.InMemoryUserManager;
 
 /**

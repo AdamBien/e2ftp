@@ -3,9 +3,10 @@
  */
 package org.eftp.ftpserver.business.monitoring.boundary;
 
-import java.util.logging.Logger;
+import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
+import org.eftp.ftpserver.business.logger.boundary.Log;
 
 /**
  *
@@ -13,7 +14,8 @@ import javax.interceptor.InvocationContext;
  */
 public class CallTracker {
 
-    private static final Logger LOG = Logger.getLogger(CallTracker.class.getName());
+    @Inject
+    Log LOG;
 
     @AroundInvoke
     public Object log(InvocationContext ic) throws Exception {

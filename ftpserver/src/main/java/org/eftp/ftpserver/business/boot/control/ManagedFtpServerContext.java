@@ -12,6 +12,7 @@ import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.enterprise.concurrent.ManagedThreadFactory;
+import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
@@ -22,12 +23,15 @@ import org.apache.ftpserver.ftplet.FtpStatistics;
 import org.apache.ftpserver.ftplet.Ftplet;
 import org.apache.ftpserver.ftplet.UserManager;
 import org.apache.ftpserver.ftpletcontainer.FtpletContainer;
+import org.apache.ftpserver.ftpletcontainer.impl.DefaultFtpletContainer;
 import org.apache.ftpserver.impl.DefaultFtpServerContext;
 import org.apache.ftpserver.impl.FtpServerContext;
 import org.apache.ftpserver.listener.Listener;
 import org.apache.ftpserver.message.MessageResource;
 import org.eftp.ftpserver.business.files.boundary.InstrumendFileSystemFactory;
+import org.eftp.ftpserver.business.logger.boundary.Log;
 import org.eftp.ftpserver.business.monitoring.boundary.CallTracker;
+import org.eftp.ftpserver.business.plugins.boundary.Plugin;
 import org.eftp.ftpserver.business.users.control.InMemoryUserManager;
 
 /**
@@ -55,13 +59,24 @@ public class ManagedFtpServerContext implements FtpServerContext {
     private DefaultFtpServerContext delegate;
     private ThreadPoolExecutor executor;
 
+    private DefaultFtpletContainer ftpletContainer;
+
+    @Inject
+    @Plugin
+    private Instance<Ftplet> hooks;
+
+    @Inject
+    Log LOG;
+
     @PostConstruct
     public void init() {
         this.workQueue = new LinkedBlockingQueue<>();
         this.delegate = new DefaultFtpServerContext();
         //Problems with passing ThreadFactory
         this.executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTimeInHours, TimeUnit.HOURS, workQueue);
-        this.delegate.setFileSystemManager(null);
+        this.delegate.setFileSystemManager(fileSystemFactory);
+        this.ftpletContainer = (DefaultFtpletContainer) this.delegate.getFtpletContainer();
+        this.installPlugins();
     }
 
     @Override
@@ -135,5 +150,12 @@ public class ManagedFtpServerContext implements FtpServerContext {
 
     public void addListener(String adefault, Listener createListener) {
         this.delegate.addListener(adefault, createListener);
+    }
+
+    void installPlugins() {
+        for (Ftplet ftplet : hooks) {
+            LOG.info("Installing: " + ftplet);
+            this.ftpletContainer.getFtplets().put(ftplet.getClass().getName(), ftplet);
+        }
     }
 }

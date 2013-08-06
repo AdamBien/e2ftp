@@ -7,7 +7,7 @@
     <packaging>pom</packaging>
     <name>e2ftp</name>
     <modules>
-        <module>ftpserverapi</module>
+        <module>ftpservice-api</module>
         <module>ftpservice</module>
         <module>ftpserver</module>
         <module>ftpserver-st</module>

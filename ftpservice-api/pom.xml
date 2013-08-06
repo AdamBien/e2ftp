@@ -8,7 +8,7 @@
         <version>0.0.2-SNAPSHOT</version>
     </parent>
     <groupId>org.eftp</groupId>
-    <artifactId>ftpserverapi</artifactId>
+    <artifactId>ftpservice-api</artifactId>
     <version>0.0.2-SNAPSHOT</version>
     <dependencies>
         <dependency>
@@ -33,4 +33,5 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <name>ftpservice-api</name>
 </project>

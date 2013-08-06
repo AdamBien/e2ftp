@@ -7,9 +7,10 @@
     <packaging>pom</packaging>
     <name>e2ftp</name>
     <modules>
-       <module>ftpserver</module>
-       <module>ftpserver-st</module>
-       <module>ftpservice</module>
+        <module>ftpserverapi</module>
+        <module>ftpservice</module>
+        <module>ftpserver</module>
+        <module>ftpserver-st</module>
     </modules>
     <build>
         <plugins>
@@ -19,11 +20,11 @@
                 <version>2.4.1</version>
             </plugin>
         </plugins>
-    </build>        
+    </build>
     <scm>
         <connection>scm:git:git@github.com:AdamBien/e2ftp.git</connection>
         <url>scm:git:git@github.com:AdamBien/e2ftp.git</url>
         <developerConnection>scm:git:git@github.com:AdamBien/e2ftp.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>         
+        <tag>HEAD</tag>
+    </scm>
 </project>

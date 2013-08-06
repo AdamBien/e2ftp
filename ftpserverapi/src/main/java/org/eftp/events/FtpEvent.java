@@ -1,7 +1,7 @@
 /*
  *
  */
-package org.eftp.ftpserver.business.plugins.entity;
+package org.eftp.events;
 
 import org.apache.ftpserver.ftplet.FtpRequest;
 import org.apache.ftpserver.ftplet.FtpSession;

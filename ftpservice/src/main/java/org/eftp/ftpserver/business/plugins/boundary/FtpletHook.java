@@ -11,9 +11,9 @@ import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.ftpserver.ftplet.FtpRequest;
 import org.apache.ftpserver.ftplet.FtpSession;
 import org.apache.ftpserver.ftplet.FtpletResult;
-import org.eftp.ftpserver.business.plugins.entity.Command;
+import org.eftp.events.Command;
+import org.eftp.events.FtpEvent;
 import org.eftp.ftpserver.business.plugins.entity.CommandInstance;
-import org.eftp.ftpserver.business.plugins.entity.FtpEvent;
 
 /**
  *

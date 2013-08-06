@@ -1,7 +1,7 @@
 /*
  *
  */
-package org.eftp.ftpserver.business.plugins.entity;
+package org.eftp.events;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

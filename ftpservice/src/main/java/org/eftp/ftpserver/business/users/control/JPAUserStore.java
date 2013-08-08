@@ -36,6 +36,10 @@ public class JPAUserStore {
         return this.em.find(FtpUser.class, userName);
     }
 
+    public FtpUser findAdmin() {
+        return this.em.createNamedQuery(FtpUser.isAdmin, FtpUser.class).getSingleResult();
+    }
+
     public void create(FtpUser user) {
         this.em.persist(user);
     }
@@ -76,6 +80,16 @@ public class JPAUserStore {
         CriteriaQuery<FtpUser> all = cq.select(rootEntry);
         TypedQuery<FtpUser> allQuery = em.createQuery(all);
         return allQuery.getResultList();
+    }
+
+    public boolean isAdmin(String userName) {
+        FtpUser user = find(userName);
+        return (user != null && user.isAdmin());
+
+    }
+
+    public FtpUser find(String username, String password) {
+        return this.em.createNamedQuery(FtpUser.authenticate, FtpUser.class).setParameter("userName", username).setParameter("password", password).getSingleResult();
     }
 
 }

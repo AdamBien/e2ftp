@@ -16,7 +16,7 @@ import org.eftp.ftpserver.business.users.control.JPAUserStore;
  */
 @Startup
 @Singleton
-public class DefaultsProvider {
+public class UserManagementInitializer {
 
     @Inject
     JPAUserStore userStore;

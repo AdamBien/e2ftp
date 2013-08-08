@@ -47,8 +47,8 @@ public class ConfigurationStore {
         }
     }
 
-    public void saveOrUpdate(ConfigurationEntry entry) {
-        this.em.merge(entry);
+    public ConfigurationEntry saveOrUpdate(ConfigurationEntry entry) {
+        return this.em.merge(entry);
     }
 
     public void remove(String name) {

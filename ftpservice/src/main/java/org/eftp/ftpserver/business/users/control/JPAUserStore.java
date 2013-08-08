@@ -12,7 +12,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.eftp.ftpserver.business.logger.boundary.Log;
+import org.eftp.ftpserver.business.users.entity.FtpConcurrentLoginPermission;
 import org.eftp.ftpserver.business.users.entity.FtpUser;
+import org.eftp.ftpserver.business.users.entity.FtpWritePermission;
 
 /**
  *
@@ -25,6 +27,10 @@ public class JPAUserStore {
 
     @Inject
     Log LOG;
+
+    private static final String DEFAULT_USER_DIRECTORY = System.getProperty("java.io.tmpdir");
+    private static final int DEFAULT_NUMBER_OF_CONCURRENT_LOGINS = 8;
+    private static final int DEFAULT_NUMBER_OF_CONCURRENT_LOGINS_FROM_SAME_IP = 8;
 
     public FtpUser find(String userName) {
         return this.em.find(FtpUser.class, userName);
@@ -47,11 +53,20 @@ public class JPAUserStore {
     public void createDefaultUser() {
         if (allUsers().isEmpty()) {
             LOG.info("Userstore is empty, creating the default user");
-            FtpUser defaultUser = new FtpUser("duke", "duke");
+            FtpUser defaultUser = getDefaultUser("duke", "duke");
             em.persist(defaultUser);
         } else {
             LOG.info("At least a user already exists, nothing todo");
         }
+    }
+
+    public FtpUser getDefaultUser(String user, String password) {
+        FtpUser defaultUser = new FtpUser(user, password);
+        defaultUser.setIsEnabled(true);
+        defaultUser.addPermission(new FtpWritePermission(DEFAULT_USER_DIRECTORY));
+        defaultUser.addPermission(new FtpConcurrentLoginPermission(DEFAULT_NUMBER_OF_CONCURRENT_LOGINS, DEFAULT_NUMBER_OF_CONCURRENT_LOGINS_FROM_SAME_IP));
+        defaultUser.setMaxIdleTimeSec(3600);
+        return defaultUser;
     }
 
     public List<FtpUser> allUsers() {

@@ -26,9 +26,11 @@ public class FTPServerWrapper {
     private FtpServer ftpServer;
 
     @Inject
-    private int SERVER_PORT;
+    private int serverPort;
     @Inject
-    private int MAX_LOGINS;
+    private int maxLogins;
+    @Inject
+    private boolean anonymousLoginEnabled;
 
     @Inject
     UserManagerIntegrationAdapter userManager;
@@ -39,14 +41,14 @@ public class FTPServerWrapper {
     @PostConstruct
     public void init() {
         ConnectionConfigFactory ccf = new ConnectionConfigFactory();
-        ccf.setMaxLogins(MAX_LOGINS);
+        ccf.setMaxLogins(maxLogins);
         ccf.setAnonymousLoginEnabled(true);
         ccf.setMaxThreads(2);
-        ccf.setMaxAnonymousLogins(MAX_LOGINS);
+        ccf.setMaxAnonymousLogins(maxLogins);
         this.managedContext.setConnectionConfig(ccf.createConnectionConfig());
         this.managedContext.setUserManager(userManager);
         ListenerFactory factory = new ListenerFactory();
-        factory.setPort(SERVER_PORT);
+        factory.setPort(serverPort);
         this.managedContext.addListener("default", factory.createListener());
         this.ftpServer = new DefaultFtpServer(this.managedContext);
         try {

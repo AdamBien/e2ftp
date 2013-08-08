@@ -17,6 +17,7 @@ public class FtpWritePermission extends FtpPermission {
     private String permissionRoot;
 
     public FtpWritePermission() {
+        this("/");
     }
 
     public FtpWritePermission(String permissionRoot) {

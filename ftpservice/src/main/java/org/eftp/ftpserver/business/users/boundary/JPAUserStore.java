@@ -70,7 +70,7 @@ public class JPAUserStore {
         FtpUser defaultUser = new FtpUser(user, password);
         defaultUser.setIsEnabled(true);
         defaultUser.setHomeDir(DEFAULT_USER_DIRECTORY);
-        defaultUser.addPermission(new FtpWritePermission(DEFAULT_USER_DIRECTORY));
+        defaultUser.addPermission(new FtpWritePermission());
         defaultUser.addPermission(new FtpConcurrentLoginPermission(DEFAULT_NUMBER_OF_CONCURRENT_LOGINS, DEFAULT_NUMBER_OF_CONCURRENT_LOGINS_FROM_SAME_IP));
         defaultUser.setMaxIdleTimeSec(3600);
         return defaultUser;

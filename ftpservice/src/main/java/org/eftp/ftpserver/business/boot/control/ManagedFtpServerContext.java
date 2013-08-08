@@ -2,9 +2,7 @@ package org.eftp.ftpserver.business.boot.control;
 
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.ConcurrencyManagement;
@@ -44,10 +42,6 @@ import org.eftp.ftpserver.business.users.control.InMemoryUserManager;
 @ConcurrencyManagement(ConcurrencyManagementType.BEAN)
 public class ManagedFtpServerContext implements FtpServerContext {
 
-    int corePoolSize = 2;
-    int maximumPoolSize = 8;
-    long keepAliveTimeInHours = 1;
-
     BlockingQueue<Runnable> workQueue;
 
     @Resource
@@ -57,6 +51,8 @@ public class ManagedFtpServerContext implements FtpServerContext {
     InstrumendFileSystemFactory fileSystemFactory;
 
     private DefaultFtpServerContext delegate;
+
+    @Inject
     private ThreadPoolExecutor executor;
 
     private DefaultFtpletContainer ftpletContainer;
@@ -70,10 +66,7 @@ public class ManagedFtpServerContext implements FtpServerContext {
 
     @PostConstruct
     public void init() {
-        this.workQueue = new LinkedBlockingQueue<>();
         this.delegate = new DefaultFtpServerContext();
-        //Problems with passing ThreadFactory
-        this.executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTimeInHours, TimeUnit.HOURS, workQueue);
         this.delegate.setFileSystemManager(fileSystemFactory);
         this.ftpletContainer = (DefaultFtpletContainer) this.delegate.getFtpletContainer();
         this.installPlugins();

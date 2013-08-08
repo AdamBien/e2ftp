@@ -30,6 +30,11 @@ public class ConfigurationStartup {
         this.store.saveOrUpdate("SERVER_PORT", "8888");
         this.store.saveOrUpdate("IDLE_TIME", String.valueOf(30 * 1000));
         this.store.saveOrUpdate("MAX_LOGINS", String.valueOf(100));
+        this.store.saveOrUpdate("corePoolSize", String.valueOf(2));
+        this.store.saveOrUpdate("maximumPoolSize", String.valueOf(8));
+        this.store.saveOrUpdate("keepAliveTimeInHours", String.valueOf(1));
+        this.store.saveOrUpdate("incomingRequestQueueDepth", String.valueOf(10));
+
         LOG.info("Default values are written");
     }
 

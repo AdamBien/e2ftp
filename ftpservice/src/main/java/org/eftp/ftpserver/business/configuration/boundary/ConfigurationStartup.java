@@ -27,7 +27,9 @@ public class ConfigurationStartup {
     @PostConstruct
     public void establishDefaults() {
         LOG.info("Establishing defaults");
-        this.store.saveOrUpdate("SERVER_PORT", "8888");
+        this.store.saveOrUpdate("serverPort", "8888");
+        this.store.saveOrUpdate("maxLogins", "10");
+        this.store.saveOrUpdate("anonymousLoginEnabled", "false");
         this.store.saveOrUpdate("corePoolSize", String.valueOf(2));
         this.store.saveOrUpdate("maximumPoolSize", String.valueOf(8));
         this.store.saveOrUpdate("keepAliveTimeInHours", String.valueOf(1));

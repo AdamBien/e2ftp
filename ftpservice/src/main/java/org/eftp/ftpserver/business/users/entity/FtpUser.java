@@ -44,4 +44,11 @@ public class FtpUser {
         }
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

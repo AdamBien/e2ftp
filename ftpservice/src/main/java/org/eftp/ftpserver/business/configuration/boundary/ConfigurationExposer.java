@@ -40,6 +40,15 @@ public class ConfigurationExposer {
     }
 
     @Produces
+    public Boolean getBoolean(InjectionPoint ip) {
+        final String stringValue = getString(ip);
+        if (stringValue == null) {
+            return false;
+        }
+        return Boolean.parseBoolean(stringValue);
+    }
+
+    @Produces
     public String getString(InjectionPoint ip) {
         String fieldName = ip.getMember().getName();
         String configurationValue = this.store.find(fieldName);

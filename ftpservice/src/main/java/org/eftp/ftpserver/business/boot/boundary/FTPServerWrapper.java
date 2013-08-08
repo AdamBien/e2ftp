@@ -29,8 +29,6 @@ public class FTPServerWrapper {
     private int SERVER_PORT;
     @Inject
     private int MAX_LOGINS;
-    @Inject
-    private int IDLE_TIME;
 
     @Inject
     UserManagerIntegrationAdapter userManager;

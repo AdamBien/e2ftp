@@ -21,7 +21,7 @@ import org.apache.ftpserver.usermanager.impl.BaseUser;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = FtpUser.isAdmin, query = "SELECT f FROM FtpUser f where f.admin = true"),
+    @NamedQuery(name = FtpUser.isAdmin, query = "SELECT f FROM FtpUser f where f.admin = TRUE"),
     @NamedQuery(name = FtpUser.authenticate, query = "SELECT f FROM FtpUser f where f.userName = :userName and f.password = :password"),})
 public class FtpUser {
 
@@ -34,6 +34,7 @@ public class FtpUser {
     private String userName;
     private String password;
 
+    @Column(name = "c_admin")
     private boolean admin;
     private int maxIdleTimeSec;
     private String homeDir;

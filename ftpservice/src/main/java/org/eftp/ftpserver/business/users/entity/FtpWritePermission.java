@@ -4,7 +4,6 @@
 package org.eftp.ftpserver.business.users.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import org.apache.ftpserver.ftplet.Authority;
 import org.apache.ftpserver.usermanager.impl.WritePermission;
 
@@ -15,8 +14,6 @@ import org.apache.ftpserver.usermanager.impl.WritePermission;
 @Entity
 public class FtpWritePermission extends FtpPermission {
 
-    @Id
-    private Long id;
     private String permissionRoot;
 
     public FtpWritePermission() {
@@ -24,10 +21,6 @@ public class FtpWritePermission extends FtpPermission {
 
     public FtpWritePermission(String permissionRoot) {
         this.permissionRoot = permissionRoot;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getPermissionRoot() {

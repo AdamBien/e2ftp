@@ -8,7 +8,6 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import org.eftp.ftpserver.business.logger.boundary.Log;
-import org.eftp.ftpserver.business.users.control.JPAUserStore;
 
 /**
  *

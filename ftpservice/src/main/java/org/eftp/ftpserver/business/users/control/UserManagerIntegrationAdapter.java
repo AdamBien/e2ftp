@@ -1,5 +1,6 @@
 package org.eftp.ftpserver.business.users.control;
 
+import org.eftp.ftpserver.business.users.boundary.JPAUserStore;
 import java.util.List;
 import javax.inject.Inject;
 import org.apache.ftpserver.ftplet.Authentication;

@@ -30,7 +30,7 @@ import org.eftp.ftpserver.business.files.boundary.InstrumendFileSystemFactory;
 import org.eftp.ftpserver.business.logger.boundary.Log;
 import org.eftp.ftpserver.business.monitoring.boundary.CallTracker;
 import org.eftp.ftpserver.business.plugins.boundary.Plugin;
-import org.eftp.ftpserver.business.users.control.InMemoryUserManager;
+import org.eftp.ftpserver.business.users.control.UserManagerIntegrationAdapter;
 
 /**
  *
@@ -137,7 +137,7 @@ public class ManagedFtpServerContext implements FtpServerContext {
         this.delegate.setConnectionConfig(createConnectionConfig);
     }
 
-    public void setUserManager(InMemoryUserManager userManager) {
+    public void setUserManager(UserManagerIntegrationAdapter userManager) {
         this.delegate.setUserManager(userManager);
     }
 

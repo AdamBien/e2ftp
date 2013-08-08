@@ -3,6 +3,8 @@
     <persistence-unit name="configuration" transaction-type="JTA">
         <jar-file>ftpservice</jar-file>
         <class>org.eftp.ftpserver.business.configuration.entity.ConfigurationEntry</class>
+        <class>org.eftp.ftpserver.business.users.entity.FtpGroup</class>
+        <class>org.eftp.ftpserver.business.users.entity.FtpUser</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>

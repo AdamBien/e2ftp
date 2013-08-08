@@ -1,6 +1,5 @@
 package org.eftp.ftpserver.business.users.control;
 
-import org.eftp.ftpserver.business.users.boundary.JPAUserStore;
 import java.util.List;
 import javax.inject.Inject;
 import org.apache.ftpserver.ftplet.Authentication;
@@ -10,7 +9,7 @@ import org.apache.ftpserver.ftplet.User;
 import org.apache.ftpserver.ftplet.UserManager;
 import org.apache.ftpserver.usermanager.AnonymousAuthentication;
 import org.apache.ftpserver.usermanager.UsernamePasswordAuthentication;
-import org.apache.ftpserver.usermanager.impl.BaseUser;
+import org.eftp.ftpserver.business.users.boundary.JPAUserStore;
 import org.eftp.ftpserver.business.users.entity.FtpUser;
 
 /**
@@ -77,15 +76,11 @@ public class UserManagerIntegrationAdapter implements UserManager {
         if (adminUser != null) {
             return adminUser.getUserName();
         }
-        return adminUser.getUserName();
+        return null;
     }
 
     @Override
     public boolean isAdmin(String userName) throws FtpException {
         return this.userStore.isAdmin(userName);
-    }
-
-    public BaseUser getUser() {
-        return this.userStore.getDefaultUser("duke", "duke").getBaseUser();
     }
 }

@@ -2,6 +2,7 @@ package org.eftp.ftpserver.business.users.control;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import org.apache.ftpserver.ftplet.Authentication;
 import org.apache.ftpserver.ftplet.AuthenticationFailedException;
 import org.apache.ftpserver.ftplet.Authority;
@@ -11,7 +12,6 @@ import org.apache.ftpserver.ftplet.UserManager;
 import org.apache.ftpserver.usermanager.impl.BaseUser;
 import org.apache.ftpserver.usermanager.impl.ConcurrentLoginPermission;
 import org.apache.ftpserver.usermanager.impl.WritePermission;
-import org.eftp.ftpserver.business.boot.boundary.FTPServerWrapper;
 
 /**
  *
@@ -20,6 +20,11 @@ import org.eftp.ftpserver.business.boot.boundary.FTPServerWrapper;
 public class InMemoryUserManager implements UserManager {
 
     private static final String JAVA_IO_TEMP_DIR = System.getProperty("java.io.tmpdir");
+    @Inject
+    private int IDLE_TIME;
+
+    @Inject
+    private int MAX_LOGINS;
 
     @Override
     public User getUserByName(String string) throws FtpException {
@@ -64,14 +69,14 @@ public class InMemoryUserManager implements UserManager {
         List<Authority> authorities = new ArrayList<>();
         authorities.add(new WritePermission());
 
-        authorities.add(new ConcurrentLoginPermission(FTPServerWrapper.MAX_LOGINS, FTPServerWrapper.MAX_LOGINS));
+        authorities.add(new ConcurrentLoginPermission(MAX_LOGINS, MAX_LOGINS));
 
         BaseUser user = new BaseUser();
         user.setAuthorities(authorities);
         user.setName("duke");
         user.setPassword("duke");
         user.setHomeDirectory(JAVA_IO_TEMP_DIR);
-        user.setMaxIdleTime(FTPServerWrapper.IDLE_TIME);
+        user.setMaxIdleTime(IDLE_TIME);
         return user;
     }
 

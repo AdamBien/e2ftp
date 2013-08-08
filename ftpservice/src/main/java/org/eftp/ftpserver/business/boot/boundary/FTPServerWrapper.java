@@ -2,6 +2,7 @@ package org.eftp.ftpserver.business.boot.boundary;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
@@ -19,12 +20,17 @@ import org.eftp.ftpserver.business.users.control.InMemoryUserManager;
  */
 @Startup
 @Singleton
+@DependsOn("ConfigurationStartup")
 public class FTPServerWrapper {
 
     private FtpServer ftpServer;
-    public final static int SERVER_PORT = 8888;
-    public final static int MAX_LOGINS = 100;
-    public final static int IDLE_TIME = 30 * 1000;
+
+    @Inject
+    private int SERVER_PORT;
+    @Inject
+    private int MAX_LOGINS;
+    @Inject
+    private int IDLE_TIME;
 
     @Inject
     InMemoryUserManager userManager;

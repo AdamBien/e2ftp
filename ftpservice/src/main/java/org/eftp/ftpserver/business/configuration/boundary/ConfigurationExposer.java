@@ -31,6 +31,15 @@ public class ConfigurationExposer {
     }
 
     @Produces
+    public Long getLong(InjectionPoint ip) {
+        final String stringValue = getString(ip);
+        if (stringValue == null) {
+            return 0l;
+        }
+        return Long.parseLong(stringValue);
+    }
+
+    @Produces
     public String getString(InjectionPoint ip) {
         String fieldName = ip.getMember().getName();
         String configurationValue = this.store.find(fieldName);

@@ -12,7 +12,7 @@ import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.ftpserver.impl.DefaultFtpServer;
 import org.apache.ftpserver.listener.ListenerFactory;
 import org.eftp.ftpserver.business.boot.control.ManagedFtpServerContext;
-import org.eftp.ftpserver.business.users.control.InMemoryUserManager;
+import org.eftp.ftpserver.business.users.control.UserManagerIntegrationAdapter;
 
 /**
  *
@@ -33,7 +33,7 @@ public class FTPServerWrapper {
     private int IDLE_TIME;
 
     @Inject
-    InMemoryUserManager userManager;
+    UserManagerIntegrationAdapter userManager;
 
     @Inject
     ManagedFtpServerContext managedContext;

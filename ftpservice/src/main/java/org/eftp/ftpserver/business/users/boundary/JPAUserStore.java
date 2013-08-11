@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.eftp.ftpserver.business.logger.boundary.Log;
 import org.eftp.ftpserver.business.users.entity.FtpConcurrentLoginPermission;
+import org.eftp.ftpserver.business.users.entity.FtpGroup;
 import org.eftp.ftpserver.business.users.entity.FtpUser;
 import org.eftp.ftpserver.business.users.entity.FtpWritePermission;
 
@@ -67,7 +68,10 @@ public class JPAUserStore {
     }
 
     public FtpUser getDefaultUser(String user, String password) {
+        FtpGroup defaultGroup = new FtpGroup();
+        defaultGroup.setName("guest");
         FtpUser defaultUser = new FtpUser(user, password);
+        defaultUser.addGroup(defaultGroup);
         defaultUser.setIsEnabled(true);
         defaultUser.setHomeDir(DEFAULT_USER_DIRECTORY);
         defaultUser.addPermission(new FtpWritePermission());

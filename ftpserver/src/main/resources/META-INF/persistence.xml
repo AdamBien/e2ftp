@@ -9,6 +9,7 @@
         <class>org.eftp.ftpserver.business.users.entity.FtpTransferRatePermision</class>
         <class>org.eftp.ftpserver.business.users.entity.FtpWritePermission</class>
         <class>org.eftp.ftpserver.business.users.entity.FtpPermission</class>
+        <class>org.eftp.ftpserver.business.hooks.entity.Hook</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

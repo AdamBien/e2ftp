@@ -36,7 +36,7 @@ public class HooksResource {
     @POST
     public Response register(JsonObject callback, @Context UriInfo info) {
         long id = hr.saveOrUpdate(convert(callback));
-        final URI creationUri = info.getRequestUri().resolve(String.valueOf(id));
+        final URI creationUri = info.getRequestUriBuilder().path(String.valueOf(id)).build();
         return Response.created(creationUri).build();
     }
 
@@ -70,7 +70,11 @@ public class HooksResource {
     }
 
     JsonObject convert(Hook hook) {
-        return Json.createObjectBuilder().add("command", hook.getCommand().toString()).add("uri", hook.getUri()).build();
+        return Json.createObjectBuilder().
+                add("command", hook.getCommand().toString()).
+                add("uri", hook.getUri()).
+                add("id", hook.getId()).
+                build();
     }
 
 }

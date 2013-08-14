@@ -70,6 +70,7 @@ public class JPAUserStore {
     public FtpUser getDefaultUser(String user, String password) {
         FtpGroup defaultGroup = new FtpGroup();
         defaultGroup.setName("guest");
+        defaultGroup = this.em.merge(defaultGroup);
         FtpUser defaultUser = new FtpUser(user, password);
         defaultUser.addGroup(defaultGroup);
         defaultUser.setIsEnabled(true);

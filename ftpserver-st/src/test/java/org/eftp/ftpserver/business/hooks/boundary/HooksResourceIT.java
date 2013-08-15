@@ -40,9 +40,9 @@ public class HooksResourceIT extends RESTSupport {
 
         //creation
         JsonObject newEntry = Json.createObjectBuilder().add("command", "everything").add("uri", createdUri).build();
-        Response putResponse = this.mainTarget.request().post(Entity.entity(newEntry, MediaType.APPLICATION_JSON));
-        assertThat(putResponse.getStatus(), is(201));
-        List<Object> locationValues = putResponse.getHeaders().get("Location");
+        Response postResponse = this.mainTarget.request().post(Entity.entity(newEntry, MediaType.APPLICATION_JSON));
+        assertThat(postResponse.getStatus(), is(201));
+        List<Object> locationValues = postResponse.getHeaders().get("Location");
         assertThat(locationValues.size(), is(1));
         String uri = (String) locationValues.get(0);
         System.out.println("---------> " + uri);
@@ -69,6 +69,29 @@ public class HooksResourceIT extends RESTSupport {
         JsonObject newEntry = Json.createObjectBuilder().add("command", "everything").add("uri", createdUri).build();
         Response putResponse = this.mainTarget.request().post(Entity.entity(newEntry, MediaType.APPLICATION_JSON));
         assertThat(putResponse.getStatus(), is(Response.Status.BAD_REQUEST.getStatusCode()));
+    }
+
+    @Test
+    public void creationWithoutCommand() {
+        final String createdUri = "http://localhost" + System.currentTimeMillis();
+        //creation
+        JsonObject newEntry = Json.createObjectBuilder().add("uri", createdUri).build();
+        Response putResponse = this.mainTarget.request().post(Entity.entity(newEntry, MediaType.APPLICATION_JSON));
+        assertThat(putResponse.getStatus(), is(201));
+
+        Response postResponse = this.mainTarget.request().post(Entity.entity(newEntry, MediaType.APPLICATION_JSON));
+        assertThat(postResponse.getStatus(), is(201));
+
+        List<Object> locationValues = postResponse.getHeaders().get("Location");
+        assertThat(locationValues.size(), is(1));
+        String uri = (String) locationValues.get(0);
+
+        //fetch
+        Response fetchResponse = this.client.target(uri).request(MediaType.APPLICATION_JSON).get(Response.class);
+        assertThat(fetchResponse.getStatus(), is(200));
+        JsonObject value = fetchResponse.readEntity(JsonObject.class);
+        assertThat(value.getString("command"), is("EVERYTHING"));
 
     }
+
 }

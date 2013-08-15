@@ -3,6 +3,8 @@
  */
 package org.eftp.ftpserver.business.hooks.entity;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -47,6 +49,15 @@ public class Hook {
 
     public void setCommand(Command.Name command) {
         this.command = command;
+    }
+
+    boolean isValid() {
+        try {
+            new URL(this.uri);
+        } catch (MalformedURLException ex) {
+            return false;
+        }
+        return this.command != null;
     }
 
 }

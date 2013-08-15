@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.eftp.ftpserver.business.hooks.entity.Checks;
 import org.eftp.ftpserver.business.hooks.entity.Hook;
 
 /**
@@ -23,7 +24,7 @@ public class HooksRegistry {
     @PersistenceContext
     EntityManager em;
 
-    public long saveOrUpdate(Hook hook) {
+    public long saveOrUpdate(@Checks Hook hook) {
         return this.em.merge(hook).getId();
     }
 

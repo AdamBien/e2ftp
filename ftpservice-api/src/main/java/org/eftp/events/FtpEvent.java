@@ -14,14 +14,16 @@ public class FtpEvent {
 
     private final FtpSession session;
     private final FtpRequest request;
+    private final Command.Name command;
 
-    public FtpEvent(FtpSession session, FtpRequest request) {
+    public FtpEvent(Command.Name command, FtpSession session, FtpRequest request) {
+        this.command = command;
         this.session = session;
         this.request = request;
     }
 
     public FtpEvent(FtpSession session) {
-        this(session, null);
+        this(Command.Name.EVERYTHING, session, null);
     }
 
     public FtpSession getSession() {
@@ -30,6 +32,10 @@ public class FtpEvent {
 
     public FtpRequest getRequest() {
         return request;
+    }
+
+    public Command.Name getCommand() {
+        return command;
     }
 
     @Override

@@ -60,6 +60,15 @@ public class HooksResourceIT extends RESTSupport {
         //empty fetch
         Response emptyFetchResponse = this.mainTarget.path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).get(Response.class);
         assertThat(emptyFetchResponse.getStatus(), is(204));
+    }
+
+    @Test
+    public void creationWithInvalidURI() {
+        final String createdUri = "INVALID" + System.currentTimeMillis();
+        //creation
+        JsonObject newEntry = Json.createObjectBuilder().add("command", "everything").add("uri", createdUri).build();
+        Response putResponse = this.mainTarget.request().post(Entity.entity(newEntry, MediaType.APPLICATION_JSON));
+        assertThat(putResponse.getStatus(), is(Response.Status.BAD_REQUEST.getStatusCode()));
 
     }
 }

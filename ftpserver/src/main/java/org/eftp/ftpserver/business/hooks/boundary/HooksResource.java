@@ -70,6 +70,9 @@ public class HooksResource {
     }
 
     JsonObject convert(Hook hook) {
+        if (hook == null) {
+            return null;
+        }
         return Json.createObjectBuilder().
                 add("command", hook.getCommand().toString()).
                 add("uri", hook.getUri()).

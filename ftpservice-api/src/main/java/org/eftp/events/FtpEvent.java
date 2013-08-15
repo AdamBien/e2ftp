@@ -22,6 +22,10 @@ public class FtpEvent {
         this.request = request;
     }
 
+    public FtpEvent(Command.Name command, FtpSession session) {
+        this(command, session, null);
+    }
+
     public FtpEvent(FtpSession session) {
         this(Command.Name.EVERYTHING, session, null);
     }

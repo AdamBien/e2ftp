@@ -42,9 +42,29 @@ public class FtpEvent {
         return command;
     }
 
+    public String getRequestCommand() {
+        if (this.request == null) {
+            return null;
+        }
+        return this.request.getCommand();
+    }
+
+    public String getRequestLine() {
+        if (this.request == null) {
+            return null;
+        }
+        return this.request.getRequestLine();
+    }
+
+    public String getArgument() {
+        if (this.request == null) {
+            return null;
+        }
+        return this.request.getArgument();
+    }
+
     @Override
     public String toString() {
         return "FtpEvent{" + "session=" + session + ", request=" + request + '}';
     }
-
 }

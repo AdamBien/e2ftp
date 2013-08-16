@@ -3,6 +3,9 @@
  */
 package org.eftp.events;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import org.apache.ftpserver.ftplet.FtpRequest;
 import org.apache.ftpserver.ftplet.FtpSession;
 import org.apache.ftpserver.ftplet.User;
@@ -74,6 +77,31 @@ public class FtpEvent {
     @Override
     public String toString() {
         return "FtpEvent{" + "session=" + session + ", request=" + request + '}';
+    }
+
+    public JsonObject asJson() {
+        User user = this.getUser();
+        String ftpCommand = this.getRequestCommand();
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        if (ftpCommand != null) {
+            builder.add("ftpCommand", ftpCommand);
+        }
+
+        if (request != null) {
+            if (request.hasArgument()) {
+                builder.add("ftpArgument", request.getArgument());
+            }
+        }
+        if (user != null) {
+            builder.add("userName", user.getName());
+            builder.add("homeDirectory", user.getHomeDirectory());
+        }
+        if (session != null) {
+            String clientAddress = session.getClientAddress().getHostString();
+            builder.add("clientAddress", clientAddress);
+        }
+        builder.add("command", this.command.name());
+        return builder.build();
     }
 
 }

@@ -1,5 +1,6 @@
 package org.e2ftp.testclient.presentation;
 
+import java.util.List;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.json.JsonObject;
@@ -42,9 +43,9 @@ public class Index {
 
     public String getCallback() {
         String retVal = "-nothing received yet-";
-        JsonObject object = resource.getCallbackObject();
-        if (object != null) {
-            retVal = object.toString();
+        List<JsonObject> list = resource.getCallbackObject();
+        if (!list.isEmpty()) {
+            retVal = list.toString();
         }
         return retVal;
     }

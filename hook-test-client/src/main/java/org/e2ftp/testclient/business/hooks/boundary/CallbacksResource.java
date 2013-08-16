@@ -3,6 +3,9 @@
  */
 package org.e2ftp.testclient.business.hooks.boundary;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
@@ -19,15 +22,20 @@ import javax.ws.rs.Path;
 @ConcurrencyManagement(ConcurrencyManagementType.BEAN)
 public class CallbacksResource {
 
-    private JsonObject callbackObject;
+    private List<JsonObject> callbacks;
+
+    @PostConstruct
+    public void init() {
+        this.callbacks = new ArrayList<>();
+    }
 
     @POST
     public void onCallaback(JsonObject object) {
-        this.callbackObject = object;
+        this.callbacks.add(object);
     }
 
-    public JsonObject getCallbackObject() {
-        return callbackObject;
+    public List<JsonObject> getCallbackObject() {
+        return callbacks;
     }
 
 }

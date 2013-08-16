@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri Aug 16 11:03:11 CEST 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0140-865d-393e-00000783b2a8 
+on database directory memory:/Users/abien/work/workspaces/hydrometer/e2ftp/ftpservice/testDB with class loader sun.misc.Launcher$AppClassLoader@7b9a29 
+Loaded from file:/Users/abien/.m2/repository/org/apache/derby/derby/10.10.1.1/derby-10.10.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_21-b12
+user.dir=/Users/abien/work/workspaces/hydrometer/e2ftp/ftpservice
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.8.4
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

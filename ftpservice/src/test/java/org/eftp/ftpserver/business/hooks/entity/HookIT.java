@@ -3,10 +3,8 @@
  */
 package org.eftp.ftpserver.business.hooks.entity;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import org.eftp.events.FtpEventName;
+import org.eftp.ftpserver.business.PersistenceSupport;
 import org.junit.Assert;
 import static org.junit.Assert.assertNull;
 import org.junit.Before;
@@ -16,15 +14,11 @@ import org.junit.Test;
  *
  * @author adam-bien.com
  */
-public class HookIT {
-
-    private EntityManager em;
-    private EntityTransaction tx;
+public class HookIT extends PersistenceSupport {
 
     @Before
-    public void initEM() {
-        this.em = Persistence.createEntityManagerFactory("it").createEntityManager();
-        this.tx = this.em.getTransaction();
+    public void init() {
+        super.initEM();
     }
 
     @Test

@@ -24,7 +24,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.eftp.events.Command;
 import org.eftp.events.FtpEvent;
-import org.eftp.ftpserver.business.hooks.control.Notifier;
 
 /**
  *
@@ -38,8 +37,6 @@ public class EventBroadcastRessource {
 
     private final ConcurrentHashMap<Command.Name, List<AsyncResponse>> listeners = new ConcurrentHashMap<>();
     private final static int TIMEOUT_IN_SECONDS = 20;
-    @Inject
-    Notifier notifier;
 
     @Inject
     Logger LOG;
@@ -59,7 +56,7 @@ public class EventBroadcastRessource {
         LOG.info("Received listeners " + commandListeners + " for command: " + event.getCommand());
         JsonObject jsonEvent = convert(event);
         for (AsyncResponse asyncResponse : commandListeners) {
-            notifier.notify(jsonEvent, asyncResponse);
+            asyncResponse.resume(jsonEvent);
         }
     }
 

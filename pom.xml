@@ -11,6 +11,7 @@
         <module>ftpservice</module>
         <module>ftpserver</module>
         <module>ftpserver-st</module>
+        <module>hook-test-client</module>
     </modules>
     <build>
         <plugins>

@@ -33,12 +33,6 @@ public class EventBroadcastRessourceIT extends RESTSupport {
     }
 
     @Test
-    public void timeout() {
-        Response response = super.mainTarget.path("EVERYTHING").request().get(Response.class);
-        assertThat(response.getStatus(), is(Response.Status.NO_CONTENT.getStatusCode()));
-    }
-
-    @Test
     public void receiveNotification() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {

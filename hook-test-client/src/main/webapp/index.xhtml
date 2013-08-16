@@ -9,10 +9,11 @@
     <h:body>
         <f:view>
             <h:form>
-                Callback URI:<h:inputText value="#{index.callbackUri}"/><br/>
-                Server URI:<h:inputText value="#{index.serverUri}"/><br/>
-                Last Callback:<h:outputText value="#{index.callback}"/>
+                Callback URI:<h:inputText value="#{index.callbackUri}" maxlength="100" size="100"/><br/>
+                Server URI:<h:inputText value="#{index.serverUri}" maxlength="100" size="100"/><br/>
+                Last Callback:<h:outputText value="#{index.callback}"/><br/>
                 <h:commandButton value="Register" action="#{index.register}"/>
+                <h:commandButton value="Refresh" action="index"/>
             </h:form>
         </f:view>
     </h:body>

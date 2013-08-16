@@ -22,6 +22,9 @@ import javax.ws.rs.container.Suspended;
 import javax.ws.rs.container.TimeoutHandler;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.apache.ftpserver.ftplet.FtpRequest;
+import org.apache.ftpserver.ftplet.FtpSession;
+import org.apache.ftpserver.ftplet.User;
 import org.eftp.events.Command;
 import org.eftp.events.FtpEvent;
 
@@ -53,10 +56,12 @@ public class EventBroadcastRessource {
 
     public void onFtpEventArrival(@Observes @Command FtpEvent event) {
         List<AsyncResponse> commandListeners = findListenersForCommand(event);
-        LOG.info("Received listeners " + commandListeners + " for command: " + event.getCommand());
+        final Command.Name command = event.getCommand();
+        LOG.info("Received listeners " + commandListeners + " for command: " + command);
         JsonObject jsonEvent = convert(event);
         for (AsyncResponse asyncResponse : commandListeners) {
             asyncResponse.resume(jsonEvent);
+            cleanup(command, asyncResponse);
         }
     }
 
@@ -103,15 +108,29 @@ public class EventBroadcastRessource {
     }
 
     JsonObject convert(FtpEvent event) {
+        User user = event.getUser();
         String command = event.getRequestCommand();
-        String requestLine = event.getRequestLine();
+        FtpRequest request = event.getRequest();
+        FtpSession session = event.getSession();
         JsonObjectBuilder builder = Json.createObjectBuilder();
-        if (requestLine != null) {
-            builder.add("request", requestLine);
-        }
         if (command != null) {
-            builder.add("command", command);
+            builder.add("ftpCommand", command);
         }
+
+        if (request != null) {
+            if (request.hasArgument()) {
+                builder.add("ftpArgument", request.getArgument());
+            }
+        }
+        if (user != null) {
+            builder.add("userName", user.getName());
+            builder.add("homeDirectory", user.getHomeDirectory());
+        }
+        if (session != null) {
+            String clientAddress = session.getClientAddress().getHostString();
+            builder.add("clientAddress", clientAddress);
+        }
+        builder.add("command", event.getCommand().name());
         return builder.build();
     }
 }

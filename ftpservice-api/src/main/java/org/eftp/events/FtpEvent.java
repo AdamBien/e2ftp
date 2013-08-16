@@ -5,6 +5,7 @@ package org.eftp.events;
 
 import org.apache.ftpserver.ftplet.FtpRequest;
 import org.apache.ftpserver.ftplet.FtpSession;
+import org.apache.ftpserver.ftplet.User;
 
 /**
  *
@@ -63,8 +64,16 @@ public class FtpEvent {
         return this.request.getArgument();
     }
 
+    public User getUser() {
+        if (this.session == null) {
+            return null;
+        }
+        return this.session.getUser();
+    }
+
     @Override
     public String toString() {
         return "FtpEvent{" + "session=" + session + ", request=" + request + '}';
     }
+
 }

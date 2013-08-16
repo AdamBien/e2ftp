@@ -8,7 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import org.eftp.events.FtpEventName;
 import org.junit.Assert;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,7 +43,7 @@ public class HookIT {
         this.tx.commit();
 
         found = this.em.find(Hook.class, id);
-        assertNotNull(found);
+        assertNull(found);
     }
 
 }

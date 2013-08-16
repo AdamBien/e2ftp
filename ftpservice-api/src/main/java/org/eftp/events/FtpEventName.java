@@ -1,0 +1,23 @@
+/*
+ *
+ */
+package org.eftp.events;
+
+/**
+ *
+ * @author adam-bien.com
+ */
+public enum FtpEventName {
+
+    LOGIN, SITE,
+    RENAME_END, RENAME_START,
+    UPLOAD_UNIQUE_START, UPLOAD_UNIQUE_END,
+    APPEND_START, APPEND_END,
+    MKDIR_START, MKDIR_END,
+    RMDIR_START, RMDIR_END,
+    DOWNLOAD_START, DOWNLOAD_END,
+    UPLOAD_START, UPLOAD_END,
+    DELETE_END, DELETE_START,
+    DISCONNECT, CONNECT,
+    EVERYTHING;
+}

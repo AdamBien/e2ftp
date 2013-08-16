@@ -18,20 +18,20 @@ public class FtpEvent {
 
     private final FtpSession session;
     private final FtpRequest request;
-    private final Command.Name command;
+    private final FtpEventName command;
 
-    public FtpEvent(Command.Name command, FtpSession session, FtpRequest request) {
+    public FtpEvent(FtpEventName command, FtpSession session, FtpRequest request) {
         this.command = command;
         this.session = session;
         this.request = request;
     }
 
-    public FtpEvent(Command.Name command, FtpSession session) {
+    public FtpEvent(FtpEventName command, FtpSession session) {
         this(command, session, null);
     }
 
     public FtpEvent(FtpSession session) {
-        this(Command.Name.EVERYTHING, session, null);
+        this(FtpEventName.EVERYTHING, session, null);
     }
 
     public FtpSession getSession() {
@@ -42,7 +42,7 @@ public class FtpEvent {
         return request;
     }
 
-    public Command.Name getCommand() {
+    public FtpEventName getCommand() {
         return command;
     }
 

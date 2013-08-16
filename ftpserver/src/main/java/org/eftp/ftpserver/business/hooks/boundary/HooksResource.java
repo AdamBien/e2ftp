@@ -19,7 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import org.eftp.events.Command;
+import org.eftp.events.FtpEventName;
 import org.eftp.ftpserver.business.hooks.entity.Hook;
 
 /**
@@ -64,9 +64,9 @@ public class HooksResource {
     }
 
     Hook convert(JsonObject object) {
-        String command = object.getString("command", Command.Name.EVERYTHING.toString());
+        String command = object.getString("command", FtpEventName.EVERYTHING.toString());
         String uri = object.getString("uri");
-        return new Hook(uri, Command.Name.valueOf(command.toUpperCase()));
+        return new Hook(uri, FtpEventName.valueOf(command.toUpperCase()));
     }
 
     JsonObject convert(Hook hook) {

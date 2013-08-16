@@ -10,14 +10,19 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import org.eftp.events.Command;
+import javax.persistence.NamedQuery;
+import org.eftp.events.FtpEventName;
 
 /**
  *
  * @author adam-bien.com
  */
 @Entity
+@NamedQuery(name = Hook.findByCommand, query = "SELECT h from Hook h where h.command = :command")
 public class Hook {
+
+    private static final String PREFIX = "org.eftp.ftpserver.business.hooks.entity.";
+    public static final String findByCommand = PREFIX + "findByCommand";
 
     @Id
     @GeneratedValue
@@ -25,9 +30,9 @@ public class Hook {
     private String uri;
 
     @Enumerated(EnumType.STRING)
-    private Command.Name command;
+    private FtpEventName command;
 
-    public Hook(String uri, Command.Name command) {
+    public Hook(String uri, FtpEventName command) {
         this.uri = uri;
         this.command = command;
     }
@@ -43,11 +48,11 @@ public class Hook {
         return uri;
     }
 
-    public Command.Name getCommand() {
+    public FtpEventName getCommand() {
         return command;
     }
 
-    public void setCommand(Command.Name command) {
+    public void setCommand(FtpEventName command) {
         this.command = command;
     }
 

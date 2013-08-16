@@ -5,6 +5,7 @@ package org.eftp.ftpserver.business.plugins.entity;
 
 import javax.enterprise.util.AnnotationLiteral;
 import org.eftp.events.Command;
+import org.eftp.events.FtpEventName;
 
 /**
  *
@@ -12,14 +13,14 @@ import org.eftp.events.Command;
  */
 public class CommandInstance extends AnnotationLiteral<Command> implements Command {
 
-    private org.eftp.events.Command.Name name;
+    private FtpEventName name;
 
-    public CommandInstance(Name name) {
+    public CommandInstance(FtpEventName name) {
         this.name = name;
     }
 
     @Override
-    public Name value() {
+    public FtpEventName value() {
         return this.name;
     }
 }

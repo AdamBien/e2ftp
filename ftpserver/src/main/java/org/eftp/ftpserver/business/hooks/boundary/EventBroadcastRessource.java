@@ -22,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.eftp.events.Command;
 import org.eftp.events.FtpEvent;
+import org.eftp.events.FtpEventName;
 
 /**
  *
@@ -33,7 +34,7 @@ import org.eftp.events.FtpEvent;
 @ConcurrencyManagement(ConcurrencyManagementType.BEAN)
 public class EventBroadcastRessource {
 
-    private final ConcurrentHashMap<Command.Name, List<AsyncResponse>> listeners = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<FtpEventName, List<AsyncResponse>> listeners = new ConcurrentHashMap<>();
     private final static int TIMEOUT_IN_SECONDS = 20;
 
     @Inject
@@ -43,7 +44,7 @@ public class EventBroadcastRessource {
     @Path("{event-name}")
     public void registerForNotifications(@PathParam("event-name") String name,
             @Suspended AsyncResponse response) {
-        Command.Name commandName = Command.Name.valueOf(name.toUpperCase());
+        FtpEventName commandName = FtpEventName.valueOf(name.toUpperCase());
         registerListener(commandName, response);
         setupTimeout(commandName, response);
 
@@ -51,7 +52,7 @@ public class EventBroadcastRessource {
 
     public void onFtpEventArrival(@Observes @Command FtpEvent event) {
         List<AsyncResponse> commandListeners = findListenersForCommand(event);
-        final Command.Name command = event.getCommand();
+        final FtpEventName command = event.getCommand();
         LOG.info("Received listeners " + commandListeners + " for command: " + command);
         JsonObject jsonEvent = event.asJson();
         for (AsyncResponse asyncResponse : commandListeners) {
@@ -62,7 +63,7 @@ public class EventBroadcastRessource {
 
     List<AsyncResponse> findListenersForCommand(FtpEvent event) {
         List<AsyncResponse> retVal = new ArrayList<>();
-        List<AsyncResponse> jokers = listeners.get(Command.Name.EVERYTHING);
+        List<AsyncResponse> jokers = listeners.get(FtpEventName.EVERYTHING);
         List<AsyncResponse> specific = listeners.get(event.getCommand());
         if (jokers != null) {
             retVal.addAll(jokers);
@@ -73,7 +74,7 @@ public class EventBroadcastRessource {
         return retVal;
     }
 
-    void setupTimeout(final Command.Name commandName, AsyncResponse response) {
+    void setupTimeout(final FtpEventName commandName, AsyncResponse response) {
         response.setTimeout(TIMEOUT_IN_SECONDS, TimeUnit.SECONDS);
         response.setTimeoutHandler(new TimeoutHandler() {
 
@@ -85,7 +86,7 @@ public class EventBroadcastRessource {
         });
     }
 
-    void registerListener(Command.Name commandName, AsyncResponse response) {
+    void registerListener(FtpEventName commandName, AsyncResponse response) {
         List<AsyncResponse> commandListeners = listeners.get(commandName);
         if (commandListeners == null) {
             commandListeners = new ArrayList<>();
@@ -95,7 +96,7 @@ public class EventBroadcastRessource {
         commandListeners.add(response);
     }
 
-    void cleanup(Command.Name commandName, AsyncResponse response) {
+    void cleanup(FtpEventName commandName, AsyncResponse response) {
         List<AsyncResponse> commandListeners = listeners.get(commandName);
         if (commandListeners != null) {
             commandListeners.remove(response);

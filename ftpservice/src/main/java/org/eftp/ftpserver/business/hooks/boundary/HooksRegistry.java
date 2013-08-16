@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.eftp.events.FtpEventName;
 import org.eftp.ftpserver.business.hooks.entity.Checks;
 import org.eftp.ftpserver.business.hooks.entity.Hook;
 
@@ -44,5 +45,11 @@ public class HooksRegistry {
         CriteriaQuery<Hook> all = cq.select(rootEntry);
         TypedQuery<Hook> allQuery = em.createQuery(all);
         return allQuery.getResultList();
+    }
+
+    public List<Hook> findByCommand(FtpEventName name) {
+        return this.em.createNamedQuery(Hook.findByCommand, Hook.class).
+                setParameter("command", name).
+                getResultList();
     }
 }

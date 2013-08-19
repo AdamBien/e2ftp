@@ -51,8 +51,7 @@ public class FTPServerWrapperIT {
         connect();
         String remoteFile = "e2ftp-client" + System.currentTimeMillis() + ".txt";
         final String expected = "just a test";
-        ByteArrayInputStream bais = new ByteArrayInputStream(expected.getBytes());
-        this.client.storeFile(remoteFile, bais);
+        sendFile(remoteFile, expected);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         this.client.retrieveFile(remoteFile, baos);
         byte[] actual = baos.toByteArray();
@@ -65,12 +64,17 @@ public class FTPServerWrapperIT {
         assertFalse(fileExists);
     }
 
+    public void sendFile(String file, String content) throws IOException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(content.getBytes());
+        this.client.storeFile(file, bais);
+    }
+
     @After
     public void cleanup() throws IOException {
         this.client.disconnect();
     }
 
-    private void connect() throws IOException {
+    public void connect() throws IOException {
         this.client.connect(HOST, PORT);
         this.client.login(USER, PASSWORD);
     }

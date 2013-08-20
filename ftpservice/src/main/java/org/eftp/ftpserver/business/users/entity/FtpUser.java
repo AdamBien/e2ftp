@@ -14,6 +14,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import org.apache.ftpserver.ftplet.Authority;
 import org.apache.ftpserver.usermanager.impl.BaseUser;
+import static org.eftp.ftpserver.business.users.control.Digester.computeHash;
 
 /**
  *
@@ -49,7 +50,7 @@ public class FtpUser {
     public FtpUser(String userName, String password) {
         this();
         this.userName = userName;
-        this.password = password;
+        this.password = computeHash(password);
     }
 
     public FtpUser() {
@@ -58,8 +59,10 @@ public class FtpUser {
     }
 
     public boolean changePassword(String oldPassword, String newPassword) {
-        if (this.password.equals(oldPassword)) {
-            this.password = newPassword;
+        String oldHashed = computeHash(oldPassword);
+        String newHashed = computeHash(newPassword);
+        if (this.password.equals(oldHashed)) {
+            this.password = newHashed;
             return true;
         } else {
             return false;

@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.eftp.ftpserver.business.logger.boundary.Log;
+import org.eftp.ftpserver.business.users.control.Digester;
 import org.eftp.ftpserver.business.users.entity.FtpConcurrentLoginPermission;
 import org.eftp.ftpserver.business.users.entity.FtpGroup;
 import org.eftp.ftpserver.business.users.entity.FtpUser;
@@ -97,7 +98,8 @@ public class JPAUserStore {
     }
 
     public FtpUser find(String username, String password) {
-        return this.em.createNamedQuery(FtpUser.authenticate, FtpUser.class).setParameter("userName", username).setParameter("password", password).getSingleResult();
+        String hashed = Digester.computeHash(password);
+        return this.em.createNamedQuery(FtpUser.authenticate, FtpUser.class).setParameter("userName", username).setParameter("password", hashed).getSingleResult();
     }
 
 }

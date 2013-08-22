@@ -69,11 +69,22 @@ public class JPAUserStore {
     }
 
     public FtpUser getDefaultUser(String user, String password) {
-        FtpGroup defaultGroup = new FtpGroup();
-        defaultGroup.setName("guest");
-        defaultGroup = this.em.merge(defaultGroup);
+        FtpGroup adminGroup = new FtpGroup();
+        adminGroup.setName("admin");
+        adminGroup = this.em.merge(adminGroup);
+
+        FtpGroup listenerGroup = new FtpGroup();
+        listenerGroup.setName("listener");
+        listenerGroup = this.em.merge(listenerGroup);
+
+        FtpGroup userGroup = new FtpGroup();
+        userGroup.setName("user");
+        userGroup = this.em.merge(userGroup);
+
         FtpUser defaultUser = new FtpUser(user, password);
-        defaultUser.addGroup(defaultGroup);
+        defaultUser.addGroup(userGroup);
+        defaultUser.addGroup(listenerGroup);
+        defaultUser.addGroup(adminGroup);
         defaultUser.setIsEnabled(true);
         defaultUser.setHomeDir(DEFAULT_USER_DIRECTORY);
         defaultUser.addPermission(new FtpWritePermission());

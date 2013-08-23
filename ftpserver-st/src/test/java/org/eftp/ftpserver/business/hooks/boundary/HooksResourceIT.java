@@ -28,7 +28,7 @@ public class HooksResourceIT extends RESTSupport {
     @Before
     @Override
     public void init() {
-        super.init(CONFIGURATION_URI);
+        super.init(CONFIGURATION_URI, "duke", "duke");
     }
 
     @Test

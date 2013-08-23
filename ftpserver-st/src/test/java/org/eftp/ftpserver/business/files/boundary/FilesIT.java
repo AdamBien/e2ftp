@@ -29,7 +29,7 @@ public class FilesIT extends RESTSupport {
     @Before
     @Override
     public void init() {
-        super.init(URI);
+        super.init(URI, "duke", "duke");
         this.support = new FTPServerWrapperIT();
         this.support.init();
     }

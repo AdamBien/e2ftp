@@ -26,7 +26,7 @@ public class ConfigurationResourceIT extends RESTSupport {
 
     @Before
     public void init() {
-        super.init(CONFIGURATION_URI);
+        super.init(CONFIGURATION_URI, "duke", "duke");
     }
 
     @Test

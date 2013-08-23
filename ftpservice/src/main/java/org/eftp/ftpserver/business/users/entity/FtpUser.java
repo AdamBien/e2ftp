@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -41,10 +42,12 @@ public class FtpUser {
     private String homeDir;
     private boolean enabled;
 
+    @JoinColumn
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FtpPermission> permissions;
 
     @OneToMany
+    @JoinColumn
     private List<FtpGroup> groups;
 
     public FtpUser(String userName, String password) {

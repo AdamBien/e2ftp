@@ -42,12 +42,12 @@ public class FtpUser {
     private String homeDir;
     private boolean enabled;
 
-    @JoinColumn
+    @JoinColumn(name = "c_username")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FtpPermission> permissions;
 
     @OneToMany
-    @JoinColumn
+    @JoinColumn(name = "c_username")
     private List<FtpGroup> groups;
 
     public FtpUser(String userName, String password) {

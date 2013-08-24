@@ -38,4 +38,8 @@ public class CallbacksResource {
         return callbacks;
     }
 
+    public void clear() {
+        this.callbacks.clear();
+    }
+
 }

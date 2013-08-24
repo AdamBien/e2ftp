@@ -81,4 +81,9 @@ public class Index {
         return null;
     }
 
+    public Object clear() {
+        this.resource.clear();
+        return null;
+    }
+
 }

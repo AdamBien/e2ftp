@@ -1,6 +1,7 @@
 package org.e2ftp.testclient.presentation;
 
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.json.JsonObject;
@@ -19,11 +20,20 @@ public class Index {
     private String serverUri = HOOK_URI;
     private String callbackUri = "http://localhost:8080/hook-test-client/api/callbacks";
 
+    private String user;
+    private String password;
+
     @Inject
     HookMgmt hookMgmt;
 
     @Inject
     CallbacksResource resource;
+
+    @PostConstruct
+    public void initialize() {
+        this.user = "duke";
+        this.password = "duke";
+    }
 
     public String getServerUri() {
         return serverUri;
@@ -41,6 +51,22 @@ public class Index {
         this.callbackUri = callbackUri;
     }
 
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getCallback() {
         String retVal = "-nothing received yet-";
         List<JsonObject> list = resource.getCallbackObject();
@@ -51,7 +77,7 @@ public class Index {
     }
 
     public Object register() {
-        this.hookMgmt.register(serverUri, callbackUri);
+        this.hookMgmt.register(user, password, serverUri, callbackUri);
         return null;
     }
 

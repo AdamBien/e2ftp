@@ -9,6 +9,8 @@
     <h:body>
         <f:view>
             <h:form>
+                User: <h:inputText value="#{index.user}"/><br/>
+                Password: <h:inputSecret value="#{index.password}" redisplay="true"/><br/>
                 Callback URI:<h:inputText value="#{index.callbackUri}" maxlength="100" size="100"/><br/>
                 Server URI:<h:inputText value="#{index.serverUri}" maxlength="100" size="100"/><br/>
                 Last Callback:<h:outputText value="#{index.callback}"/><br/>

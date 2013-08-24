@@ -4,10 +4,11 @@
 package org.eftp.ftpserver.business;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.core.MultivaluedMap;
-import org.glassfish.jersey.internal.util.Base64;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -33,7 +34,11 @@ public class Authenticator implements ClientRequestFilter {
 
     private String getBasicAuthentication() {
         String token = this.user + ":" + this.password;
-        return "BASIC " + Base64.encodeAsString(token);
+        try {
+            return "BASIC " + DatatypeConverter.printBase64Binary(token.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException ex) {
+            throw new IllegalStateException("Cannot encode with UTF-8", ex);
+        }
     }
 
 }

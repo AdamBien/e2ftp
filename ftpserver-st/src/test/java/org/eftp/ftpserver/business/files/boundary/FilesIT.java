@@ -7,6 +7,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import org.eftp.ftpserver.business.RESTSupport;
 import org.eftp.ftpserver.st.FTPServerWrapperIT;
@@ -36,13 +39,15 @@ public class FilesIT extends RESTSupport {
 
     @Test
     public void downloadWithUnknownUser() {
-        Response response = super.mainTarget.path("-should-not-exist-").request().get();
-        assertThat(response.getStatus(), is(404));
+        Client unauthenticated = ClientBuilder.newClient();
+        WebTarget unauthenticatedTarget = unauthenticated.target(URI);
+        Response response = unauthenticatedTarget.path("-should-not-exist-").request().get();
+        assertThat(response.getStatus(), is(401));
     }
 
     @Test
     public void downloadWithNotExistingFile() {
-        Response response = super.mainTarget.path("duke").path("-should-not-exist-").request().get();
+        Response response = super.mainTarget.path("-should-not-exist-").request().get();
         assertThat(response.getStatus(), is(404));
     }
 
@@ -52,7 +57,7 @@ public class FilesIT extends RESTSupport {
         String content = "random content: " + System.currentTimeMillis();
         this.support.connect();
         this.support.sendFile(fileName, content);
-        Response response = super.mainTarget.path("duke").path(fileName).request().get();
+        Response response = super.mainTarget.path(fileName).request().get();
         assertThat(response.getStatus(), is(200));
         assertTrue(response.bufferEntity());
         File readFile = response.readEntity(File.class);

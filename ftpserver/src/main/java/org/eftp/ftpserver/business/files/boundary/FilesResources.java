@@ -4,6 +4,7 @@
 package org.eftp.ftpserver.business.files.boundary;
 
 import java.io.File;
+import java.security.Principal;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -26,15 +27,18 @@ public class FilesResources {
     @Inject
     Files files;
 
+    @Inject
+    Principal principal;
+
     @GET
-    @Path("/{user-name}/{file-name}")
+    @Path("/{file-name}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response getFile(@PathParam("user-name") String userName, @PathParam("file-name") String fileName) {
+    public Response getFile(@PathParam("file-name") String fileName) {
+        String userName = principal.getName();
         File file = files.getFile(userName, fileName);
         if (file == null || !file.exists()) {
             throw new WebApplicationException(Status.NOT_FOUND);
         }
         return Response.ok(file).header("Content-Disposition", "attachment; filename=" + file.getName()).build();
-
     }
 }

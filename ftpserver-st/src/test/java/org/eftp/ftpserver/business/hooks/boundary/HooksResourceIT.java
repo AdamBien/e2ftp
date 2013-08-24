@@ -77,8 +77,6 @@ public class HooksResourceIT extends RESTSupport {
         final String createdUri = "http://localhost" + System.currentTimeMillis();
         //creation
         JsonObject newEntry = Json.createObjectBuilder().add("uri", createdUri).build();
-        Response putResponse = this.mainTarget.request().post(Entity.entity(newEntry, MediaType.APPLICATION_JSON));
-        assertThat(putResponse.getStatus(), is(201));
 
         Response postResponse = this.mainTarget.request().post(Entity.entity(newEntry, MediaType.APPLICATION_JSON));
         assertThat(postResponse.getStatus(), is(201));

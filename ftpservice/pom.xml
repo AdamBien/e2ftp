@@ -4,11 +4,11 @@
     <parent>
         <groupId>org.eftp</groupId>
         <artifactId>e2ftp</artifactId>
-        <version>0.0.2</version>
+        <version>0.0.3-SNAPSHOT</version>
     </parent>
     <groupId>org.eftp</groupId>
     <artifactId>ftpservice</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>org.eftp</groupId>
             <artifactId>ftpservice-api</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.3-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

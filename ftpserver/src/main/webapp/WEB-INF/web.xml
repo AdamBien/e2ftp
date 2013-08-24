@@ -6,16 +6,42 @@
         </session-timeout>
     </session-config>
     <security-constraint>
-        <display-name>REST API</display-name>
+        <display-name>Admin API</display-name>
         <web-resource-collection>
-            <web-resource-name>FTP REST API</web-resource-name>
+            <web-resource-name>Configuration</web-resource-name>
             <description/>
-            <url-pattern>/api/*</url-pattern>
+            <url-pattern>/api/configuration/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Statistics</web-resource-name>
+            <description/>
+            <url-pattern>/api/statistics/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
             <role-name>admin</role-name>
-            <role-name>user</role-name>
+            <role-name>listener</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Hooks and Events API</display-name>
+        <web-resource-collection>
+            <web-resource-name>Events Broadcast</web-resource-name>
+            <description/>
+            <url-pattern>/api/events/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Persistent Callback API</web-resource-name>
+            <description/>
+            <url-pattern>/api/hooks/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>File Access</web-resource-name>
+            <description/>
+            <url-pattern>/api/files/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
             <role-name>listener</role-name>
         </auth-constraint>
     </security-constraint>

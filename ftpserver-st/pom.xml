@@ -4,11 +4,11 @@
     <parent>
         <groupId>org.eftp</groupId>
         <artifactId>e2ftp</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.2</version>
     </parent>
     <groupId>org.eftp</groupId>
     <artifactId>ftpserver-st</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <name>ftpserver-st</name>
     <dependencies>
         <dependency>

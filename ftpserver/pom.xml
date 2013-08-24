@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.eftp</groupId>
     <artifactId>ftpserver</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <packaging>war</packaging>
     <dependencies>
         <dependency>
             <groupId>org.eftp</groupId>
             <artifactId>ftpservice</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

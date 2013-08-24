@@ -52,6 +52,7 @@ public class HooksResourceIT extends RESTSupport {
         JsonObject value = fetchResponse.readEntity(JsonObject.class);
         assertThat(value.getString("uri"), is(createdUri));
         long id = value.getJsonNumber("id").longValue();
+        System.out.println("id --->" + id);
 
         //removal
         Response deleteResponse = this.mainTarget.path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).delete();
@@ -92,6 +93,9 @@ public class HooksResourceIT extends RESTSupport {
         JsonObject value = fetchResponse.readEntity(JsonObject.class);
         assertThat(value.getString("command"), is("EVERYTHING"));
 
+        //cleanup
+        Response deleteResponse = this.client.target(uri).request(MediaType.APPLICATION_JSON).delete();
+        assertThat(deleteResponse.getStatus(), is(204));
     }
 
 }

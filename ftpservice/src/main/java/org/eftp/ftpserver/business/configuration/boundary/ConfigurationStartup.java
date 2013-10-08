@@ -54,6 +54,7 @@ public class ConfigurationStartup {
         this.store.saveOrUpdate("maximumPoolSize", String.valueOf(8));
         this.store.saveOrUpdate("keepAliveTimeInHours", String.valueOf(1));
         this.store.saveOrUpdate("incomingRequestQueueDepth", String.valueOf(10));
+        this.store.saveOrUpdate("startServerOnStartup", "true");
 
         LOG.info("Default values are written");
     }

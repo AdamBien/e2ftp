@@ -11,6 +11,7 @@
             <web-resource-name>Configuration</web-resource-name>
             <description/>
             <url-pattern>/api/configuration/*</url-pattern>
+            <url-pattern>/api/management/*</url-pattern>
         </web-resource-collection>
         <web-resource-collection>
             <web-resource-name>Statistics</web-resource-name>

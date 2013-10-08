@@ -8,5 +8,4 @@ import javax.ws.rs.core.Application;
  * @author adam-bien.com
  */
 @ApplicationPath("api")
-public class RESTConfig extends Application {
-}
+public class RESTConfig extends Application {}

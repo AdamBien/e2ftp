@@ -19,7 +19,6 @@ package org.eftp.ftpserver.business.boot.boundary;
  * limitations under the License.
  * #L%
  */
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.DependsOn;
@@ -43,15 +42,16 @@ import org.eftp.ftpserver.business.users.control.UserManagerIntegrationAdapter;
 @DependsOn("ConfigurationStartup")
 public class FTPServerWrapper {
 
-    private FtpServer ftpServer;
-
+    protected FtpServer ftpServer;
     @Inject
-    private int serverPort;
+    protected int serverPort;
     @Inject
-    private int maxLogins;
+    protected int maxLogins;
     @Inject
     private boolean anonymousLoginEnabled;
 
+    @Inject
+    protected boolean startServerOnStartup;
     @Inject
     UserManagerIntegrationAdapter userManager;
 
@@ -60,6 +60,17 @@ public class FTPServerWrapper {
 
     @PostConstruct
     public void init() {
+        if (startServerOnStartup) {
+            this.start();
+        }
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        this.stop();
+    }
+
+    public void start() {
         ConnectionConfigFactory ccf = new ConnectionConfigFactory();
         ccf.setMaxLogins(maxLogins);
         ccf.setAnonymousLoginEnabled(true);
@@ -72,15 +83,26 @@ public class FTPServerWrapper {
         this.managedContext.addListener("default", factory.createListener());
         this.ftpServer = new DefaultFtpServer(this.managedContext);
         try {
-            this.ftpServer.start();
+            if (!this.isRunning()) {
+                this.ftpServer.start();
+            }
         } catch (FtpException ex) {
             throw new IllegalStateException("Cannot start server: ", ex);
         }
     }
 
-    @PreDestroy
-    public void shutdown() {
-        this.ftpServer.stop();
+    public void stop() {
+        if (this.isRunning()) {
+            this.ftpServer.stop();
+        }
     }
 
+    public void restart() {
+        this.stop();
+        this.start();
+    }
+
+    public boolean isRunning() {
+        return !this.ftpServer.isStopped();
+    }
 }

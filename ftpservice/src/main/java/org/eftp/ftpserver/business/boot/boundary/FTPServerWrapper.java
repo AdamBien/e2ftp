@@ -71,23 +71,23 @@ public class FTPServerWrapper {
     }
 
     public void start() {
-        ConnectionConfigFactory ccf = new ConnectionConfigFactory();
-        ccf.setMaxLogins(maxLogins);
-        ccf.setAnonymousLoginEnabled(true);
-        ccf.setMaxThreads(2);
-        ccf.setMaxAnonymousLogins(maxLogins);
-        this.managedContext.setConnectionConfig(ccf.createConnectionConfig());
-        this.managedContext.setUserManager(userManager);
-        ListenerFactory factory = new ListenerFactory();
-        factory.setPort(serverPort);
-        this.managedContext.addListener("default", factory.createListener());
-        this.ftpServer = new DefaultFtpServer(this.managedContext);
-        try {
-            if (!this.isRunning()) {
+        if (this.ftpServer == null || this.ftpServer.isStopped()) {
+            ConnectionConfigFactory ccf = new ConnectionConfigFactory();
+            ccf.setMaxLogins(maxLogins);
+            ccf.setAnonymousLoginEnabled(true);
+            ccf.setMaxThreads(2);
+            ccf.setMaxAnonymousLogins(maxLogins);
+            this.managedContext.setConnectionConfig(ccf.createConnectionConfig());
+            this.managedContext.setUserManager(userManager);
+            ListenerFactory factory = new ListenerFactory();
+            factory.setPort(serverPort);
+            this.managedContext.addListener("default", factory.createListener());
+            this.ftpServer = new DefaultFtpServer(this.managedContext);
+            try {
                 this.ftpServer.start();
+            } catch (FtpException ex) {
+                throw new IllegalStateException("Cannot start server: ", ex);
             }
-        } catch (FtpException ex) {
-            throw new IllegalStateException("Cannot start server: ", ex);
         }
     }
 
